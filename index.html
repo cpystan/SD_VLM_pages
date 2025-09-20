@@ -232,7 +232,31 @@ We employ this data generation pipeline to construct VQA pairs from ScanNet and 
 <br>
 <br>
 
+<section class="hero teaser">
+  <div class="container">
+    <!-- Abstract. -->
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Model</h2>
+        <img src="./static/images/framework.png" />
+        <figcaption>Figure: Framework.</figcaption>
+        <div class="content has-text-justified">
+          <p>
+We introduce the depth positional encoding (DPE), which can encode the depth maps into depth positional embeddings, allowing for a straightforward combination through addition.        
+          We utilize sine and cosine functions of varying frequencies to generate the depth positional embeddings        
 
+          <p>
+The model consists of a vision encoder to encode image features, a depth encoding module to incorporate depth information, and a large language model to process sequences of tokens. When depth maps are not accessible during inference, we employ an external depth estimation model to generate the depth map. This allows our model to adapt to various datasets and scenarios effectively.          </p>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+  
+<br>
+  <br>
+  
 <section class="hero teaser">
   <div class="container">
     <div class="columns is-centered has-text-centered">
