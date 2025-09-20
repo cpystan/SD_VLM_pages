@@ -201,6 +201,24 @@
           <p>
 Starting from 3D scene point clouds, we first collect the spatial information (e.g., locations, sizes, relative distances) of objects in the scene to construct a scene graph. Next, we rasterize 3D instances into 2D images and establish a 3D-to-2D mapping, which enables transferring spatial annotations to images. We also perform filtering on both images and objects to ensure the quality of the QA pairs. Finally, we design human-verified QA templates and employ LLM collaboration to generate a rich set of QA pairs.        </p>
         <p>
+  <b>(step 1) Building Scene Graph.</b>bGiven a 3D point cloud of a scene, we first construct a scene graph (stored as a JSON file) to systematically organize all annotations and metadata. This graph includes the object categorization and corresponding 3D spatial localization data which provides bounding boxes for each object, defined by centroid coordinates and dimensional parameters.
+         <p>
+<b>(step 2) Rasterize 3D instances to 2D images.</b>b> We rasterize 3D instances onto images as masks  using official tools \cite{yeshwanthliu2023scannetpp}. This process bridge an object in the 3D scene and 2D image plane, making transferring spatial annotations from 3D scene graph to each image feasible. 
+          <p>
+<b>(step 3) Image Filtering and Object Selection.</b>b  We first sparsely sample the RGB images to reduce redundancy. After that, we carefully select objects in each image, which is guided by three principal criteria: 
+(1) Prevalence and functionality.
+We focus on objects demonstrating clear functional purposes which are commonly encountered in indoor environments. Architectural components (e.g., walls, ceilings) are excluded due to their limited interactive potential. (2) Instance visibility. Objects that are partially occluded (e.g., a chair mostly hidden behind a table), truncated by image borders (e.g., only a corner of a table is visible), or too small to annotate reliably (e.g., distant objects occupying fewer than 50 pixels) are excluded from our dataset.
+(3) Semantic disambiguation.
+Addressing linguistic ambiguity is important before generating annotations. For example, tables which exist in one image may vary in color or texture but are all labeled as "table", which brings noisy correspondence and finally misleads VLMs. To mitigate this issue, we resort to Qwen2.5-VL to re-label these objects with more detailed descriptions, such as "the white table" or "the wooden table". Finally, we filter out non-informative images that have no valid objects.
+  <p>
+<b>(step 4) Templated-based Generation</b> We carefully design a set of templates based on the task definitions which include various placeholders, denoted as [$\cdot$].  For instance, one template for measuring the size of a single target object is structured as follows:
+\textit{``Q: What is the size of [object A]. A: The size of [object A] is [Length]$\times$[Width]$\times$[Height].''}
+  For each image, we enumerate the selected objects and replace these placeholders with the corresponding object labels or spatial annotations. In tasks involving two or more target objects, we also meticulously craft instructions that incorporate all relevant object labels and spatial information.
+  <p>
+ <b>(step 5) Eliciting Reasoning Path with LLM collaboration.</b>   We improve the quantitative spatial ability of VLMs by eliciting
+reasoning paths with reference
+objects, we augment the QA pairs with CoT reasoning rationale via LLM collaboration. Specifically, we randomly select one object as the reference object and combine its spatial annotations along with the image as inputs to the advanced VLM, Qwen2.5-VL. The VLM is then prompted to construct a reasoning path that leverages the reference object to infer the spatial properties of another object within the image. Subsequently, we utilize a large language model, DeepSeek-V3, to assess and filter the CoT pairs by evaluating the factual consistency and logical coherence.       
+          <p>
 We employ this data generation pipeline to construct VQA pairs from ScanNet and ScanNet++. The resulting MSMU dataset contains 2K scenes, 25K images, 75K objects, 700K QA pairs, and 2.5M numerical values, covering a wide range of quantitative spatial tasks. Besides, the CoT augmented group, named MSMU-CoT, consists of 10K quantitative spatial reasoning QA pairs.        </p>
         <p>
           \[
