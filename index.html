@@ -155,7 +155,7 @@
  <div class="container">
    <div class="columns is-centered">
      <div class="column">
-         <img src="static/images/11.png" alt="Teaser image."/>
+         <img src="static/images/vis_qa.png" alt="Teaser image."/>
          <h2 class="subtitle has-text-justified" style="font-size: 14px;">
           <b>SD-VLM</b> Our work (1) proposes Massive Spatial Measuring and Understanding (MSMU) dataset with precise spatial annotations, and (2) introduces a plug-and-play depth positional encoding method strengthening VLMs’ spatial awareness.
          </h2>
@@ -325,18 +325,9 @@ The model consists of a vision encoder to encode image features, a depth encodin
     <div class="columns is-centered has-text-centered">
       <div class="column">
         <h2 class="title is-3">Visualization</h2>
-        <img src="./static/images/4.jpg" />
+        <img src="./static/images/11.png" />
         <figcaption>Figure: Visualization of novel view synthesis results on the testing set of NeRF On-the-go dataset.</figcaption>
-        <br>
-        <img src="./static/images/5.jpg" />
-        <figcaption>Figure: Visualization of scene decomposition into transients and statics.</figcaption>
-        <br>
-        <video width="640" height="360" controls>
-          <source src="./static/videos/Training_Process.mp4" type="video/mp4">
-          <source src="video.webm" type="video/webm">
-          <p>Your browser does not support HTML5 video. Here is a <a href="video.mp4">link to the video</a> instead.</p>
-        </video>
-        <figcaption>Figure: Qualitative results compared to 3DGS during the training steps.</figcaption>
+
         <div class="content has-text-justified">
 
         </div>
@@ -346,13 +337,8 @@ The model consists of a vision encoder to encode image features, a depth encodin
       <div class="column is-four-fifths">
         <div class="content has-text-justified">
           <p>
-            Our method demonstrates superior results by effectively reducing artifacts and providing clearer boundaries. This results in a cleaner statics compared to other methods, showcasing enhanced visual quality and precision in novel views. 
-          </p>
-          <p>
-            Also, our method achieves superior transient mask separation in both indoor and outdoor scenes. It effectively separates transients and statics, and the resulting renderings closely resemble the ground truth images, demonstrating its effectiveness.
-          </p>
-            Finally, as training iterations increase, 3DGS tends to gradually integrate transient elements into the static components, rendering the residuals being almost incapable of capturing transient contents. In contrast, our HybridGS effectively distinguishes transients from statics over time, leading to consistent improvements.
-          <p>
+In this work, we identified a critical gap in the ability of Vision-Language Models (VLMs) to perform quantitative spatial reasoning. To address this, we developed MSMU, a large-scale dataset comprising 700K QA pairs and 2.5M numerical physical annotations derived from real 3D scenes, designed to provide precise metric supervision for enhancing VLMs' spatial reasoning capabilities. We introduced a simple but effective depth positional encoding module that integrates the third dimension information into the VLM frameworks, effectively upgrading the model's spatial awareness from 2D to 3D. This innovation was shown to significantly enhance spatial reasoning abilities, outperforming both RGB-only VLMs and depth-encoded VLMs. We anticipate that our contributions will pave the way for further advancements in VLMs' spatial reasoning capabilities, enabling more effective operation in real-world environments.       
+
           </p>
         </div>
       </div>
@@ -369,10 +355,10 @@ The model consists of a vision encoder to encode image features, a depth encodin
 <section class="section" id="BibTeX">
   <div class="container is-max-desktop content">
     <h2 class="title">BibTeX</h2>
-    <pre><code>@InProceedings{lin2024hybridgs,
-    author = {Jingyu Lin, Jiaqi Gu, Lubin Fan, Bojian Wu, Yujing Lou, Renjie Chen, Ligang Liu, Jieping Ye},
-    title = {HybridGS: Decoupling Transients and Statics with 2D and 3D Gaussian Splatting},
-    booktitle = {CVPR},
+    <pre><code>@InProceedings{chen2025sdvlm,
+    author = {Pingyi Chen, Yujing Lou, Shen Cao, Jinhui Guo, Lubin Fan, Yue Wu, Lin Yang, Lizhuang Ma, Jieping Ye},
+    title = {SD-VLM: Spatial Measuring and Understanding with Depth-Encoded Vision-Language Models},
+    booktitle = {NeurIPS},
     year = {2025}
 }</code></pre>
   </div>
