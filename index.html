@@ -221,7 +221,6 @@ objects, we augment the QA pairs with CoT reasoning rationale via LLM collaborat
           <p>
 We employ this data generation pipeline to construct VQA pairs from ScanNet and ScanNet++. The resulting MSMU dataset contains 2K scenes, 25K images, 75K objects, 700K QA pairs, and 2.5M numerical values, covering a wide range of quantitative spatial tasks. Besides, the CoT augmented group, named MSMU-CoT, consists of 10K quantitative spatial reasoning QA pairs.        </p>
         </p>
-<img src="./static/images/vis_qa.png" />
         </div>
       </div>
     </div>
@@ -256,6 +255,226 @@ The model consists of a vision encoder to encode image features, a depth encodin
   
 <br>
   <br>
+ <table>
+        <caption>Overall results of various models on MSMU-Bench. We report the results of LLMs, VLMs, and depth-encoded VLMs as a comprehensive comparison.</caption>
+        <thead>
+            <tr>
+                <th class="multi-row" rowspan="2">Model</th>
+                <th rowspan="1">Existence</th>
+                <th rowspan="1">Object Counting</th>
+                <th rowspan="1">Scale Estimation</th>
+                <th class="multi-row" rowspan="2">Grounding</th>
+                <th rowspan="1">Relative Position</th>
+                <th rowspan="1">Absolute Distance</th>
+                <th rowspan="1">Scale Comparison</th>
+                <th rowspan="1">Ref. Object Estimation</th>
+                <th class="multi-row" rowspan="2">Average</th>
+            </tr>
+            <tr>
+                <th>Existence</th>
+                <th>Object Counting</th>
+                <th>Scale Estimation</th>
+                <th>Relative Position</th>
+                <th>Absolute Distance</th>
+                <th>Scale Comparison</th>
+                <th>Ref. Object Estimation</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr class="group-header">
+                <td colspan="10">Large Language Models (LLMs): Only Text as Input</td>
+            </tr>
+            <tr>
+                <td class="left-align">GPT-4-Turbo<sup>1</sup></td>
+                <td>12.76</td>
+                <td>5.21</td>
+                <td>13.51</td>
+                <td>12.64</td>
+                <td>24.84</td>
+                <td>7.50</td>
+                <td>36.79</td>
+                <td>12.04</td>
+                <td>15.66</td>
+            </tr>
+            <tr>
+                <td class="left-align">Qwen2.5<sup>2</sup></td>
+                <td>4.25</td>
+                <td>0.00</td>
+                <td>0.78</td>
+                <td>13.79</td>
+                <td>0.62</td>
+                <td>0.00</td>
+                <td>16.04</td>
+                <td>1.57</td>
+                <td>4.63</td>
+            </tr>
+            <tr>
+                <td class="left-align">DeepSeek-V3<sup>3</sup></td>
+                <td>0.00</td>
+                <td>5.24</td>
+                <td>1.54</td>
+                <td>6.90</td>
+                <td>10.56</td>
+                <td>0.00</td>
+                <td>25.47</td>
+                <td>5.24</td>
+                <td>7.39</td>
+            </tr>
+            <tr class="group-header">
+                <td colspan="10">Vision-Language Models (VLMs): Image + Text as Input</td>
+            </tr>
+            <tr>
+                <td class="left-align">GPT-4o<sup>4</sup></td>
+                <td>44.68</td>
+                <td>41.67</td>
+                <td>3.86</td>
+                <td>27.59</td>
+                <td>67.08</td>
+                <td>20.00</td>
+                <td>54.72</td>
+                <td>2.09</td>
+                <td>32.28</td>
+            </tr>
+            <tr>
+                <td class="left-align">Gemini-2<sup>5</sup></td>
+                <td>38.30</td>
+                <td>43.75</td>
+                <td>23.94</td>
+                <td>19.54</td>
+                <td>54.66</td>
+                <td>12.50</td>
+                <td class="bold">69.81</td>
+                <td>18.85</td>
+                <td>35.17</td>
+            </tr>
+            <tr>
+                <td class="left-align">Qwen2.5-VL-72B<sup>2</sup></td>
+                <td>59.57</td>
+                <td>35.42</td>
+                <td>1.54</td>
+                <td>13.79</td>
+                <td>57.76</td>
+                <td>2.50</td>
+                <td>66.04</td>
+                <td>9.95</td>
+                <td>30.82</td>
+            </tr>
+            <tr>
+                <td class="left-align">Qwen2.5-VL-32B<sup>2</sup></td>
+                <td>29.79</td>
+                <td>41.67</td>
+                <td>10.81</td>
+                <td>18.39</td>
+                <td>60.25</td>
+                <td>2.50</td>
+                <td>46.23</td>
+                <td>10.99</td>
+                <td>27.59</td>
+            </tr>
+            <tr>
+                <td class="left-align">Qwen2.5-VL-7B<sup>2</sup></td>
+                <td>12.76</td>
+                <td>4.17</td>
+                <td>0.00</td>
+                <td>1.15</td>
+                <td>1.24</td>
+                <td>0.00</td>
+                <td>5.66</td>
+                <td>0.52</td>
+                <td>3.19</td>
+            </tr>
+            <tr>
+                <td class="left-align">Intern-VL3-78B<sup>6</sup></td>
+                <td>47.62</td>
+                <td>42.71</td>
+                <td>6.47</td>
+                <td>26.32</td>
+                <td>56.94</td>
+                <td>13.33</td>
+                <td>64.10</td>
+                <td>16.46</td>
+                <td>33.63</td>
+            </tr>
+            <tr>
+                <td class="left-align">Intern-VL3-8B<sup>6</sup></td>
+                <td>36.17</td>
+                <td>41.67</td>
+                <td>4.63</td>
+                <td>18.39</td>
+                <td>60.25</td>
+                <td>2.50</td>
+                <td>49.06</td>
+                <td>8.38</td>
+                <td>28.54</td>
+            </tr>
+            <tr>
+                <td class="left-align">LLaVA-1.5-7B<sup>7</sup></td>
+                <td>1.54</td>
+                <td>36.46</td>
+                <td>5.02</td>
+                <td>20.69</td>
+                <td>42.86</td>
+                <td>5.00</td>
+                <td>38.68</td>
+                <td>0.52</td>
+                <td>19.45</td>
+            </tr>
+            <tr class="group-header">
+                <td colspan="10">Depth-Encoded Vision-Language Models: Image + Depth Map + Text as Input</td>
+            </tr>
+            <tr>
+                <td class="left-align">SpatialBot<sup>8</sup></td>
+                <td>10.64</td>
+                <td>46.88</td>
+                <td>15.83</td>
+                <td>28.74</td>
+                <td>66.46</td>
+                <td>5.00</td>
+                <td>50.94</td>
+                <td>8.90</td>
+                <td>29.17</td>
+            </tr>
+            <tr>
+                <td class="left-align">SpatialRGPT<sup>9</sup></td>
+                <td>10.64</td>
+                <td>36.46</td>
+                <td>20.08</td>
+                <td>17.24</td>
+                <td>60.25</td>
+                <td>15.00</td>
+                <td>62.26</td>
+                <td>9.95</td>
+                <td>28.98</td>
+            </tr>
+            <tr class="highlight">
+                <td class="left-align">Ours</td>
+                <td class="bold">87.23</td>
+                <td class="bold">47.92</td>
+                <td>51.35</td>
+                <td>42.53</td>
+                <td class="bold">75.16</td>
+                <td>40.00</td>
+                <td>55.66</td>
+                <td>46.07</td>
+                <td>56.31</td>
+            </tr>
+            <tr class="highlight">
+                <td class="left-align">Ours w/ MSMU-CoT</td>
+                <td class="bold">87.23</td>
+                <td>42.71</td>
+                <td class="bold">51.74</td>
+                <td class="bold">49.43</td>
+                <td>73.29</td>
+                <td class="bold">50.00</td>
+                <td class="bold">69.81</td>
+                <td class="bold">49.32</td>
+                <td class="bold">59.19</td>
+            </tr>
+        </tbody>
+    </table>
+
+  <br>
+  <br>
   
 <section class="hero teaser">
   <div class="container">
@@ -265,7 +484,7 @@ The model consists of a vision encoder to encode image features, a depth encodin
 
         <div class="content has-text-justified">
           <div class="table-container">
-            <table style="width: 100%;">
+            <table style="width: 82%;">
               <!-- 设置表格宽度为100% -->
               <caption>Table: Comparison on NeRF On-the-go Dataset</caption>
               <thead>
